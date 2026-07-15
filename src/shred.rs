@@ -6,6 +6,7 @@ use reed_solomon_erasure::galois_8::ReedSolomon;
 pub const SHRED_DATA: u8 = 0;
 pub const SHRED_CODING: u8 = 1;
 
+#[derive(Copy, Clone)]
 pub struct Shred {
     pub data: [u8; SHRED_SIZE],
     pub index: u32,
