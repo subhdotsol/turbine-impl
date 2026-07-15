@@ -15,39 +15,8 @@ remaining shreds — proving the erasure-coding math actually works.
 
 ## How it works
 
-```
-data/transactions.json
-        │
-        ▼
-   b64_decode()                  decode each transaction's base64 payload
-        │
-        ▼
- shred() → data_shred [x8]       chop 1024 bytes into 8 × 128-byte data shreds, CRC32 each
-        │
-        ▼
-generate_coding_shred() → coding_shred [x8]   Reed-Solomon encode 8 parity shreds
-        │
-        ▼
-   tp_submit() x16                submit all 16 shreds to a 4-worker thread pool
-        │
-        ▼
-┌───────────────────────────────────────────┐
-│  worker: pop shred → validate_shred()      │
-│  (recompute CRC32, compare checksum)       │
-│         │                    │             │
-│        OK                CORRUPT           │
-│         └──── pending-- → signal done_cond ┘
-└───────────────────────────────────────────┘
-        │
-        ▼
-  zero out data_shred[2]          simulate losing one shred
-        │
-        ▼
-  rs_decode()                     reconstruct it from the other 7 data + 8 coding shreds
-        │
-        ▼
-  compare vs. saved original      recovered++ / failed++
-```
+<img width="1098" height="498" alt="Screenshot 2026-07-14 at 9 13 18 PM" src="https://github.com/user-attachments/assets/fc5ac33e-37f5-4fc5-af73-800788f8df8a" />
+
 
 At the end, the program prints:
 
@@ -59,7 +28,22 @@ failed:    0
 
 ## File structure
 
-
+```
+turbine/
+├── Cargo.toml
+├── Cargo.lock
+├── tx.sh                          # fetches real Solana tx data from an RPC (optional)
+├── data/
+│   └── transactions.json          # input: JSON array of base64-encoded transactions
+├── src/
+│   ├── constants.rs               # SHRED_SIZE, DATA_SHRED, CODE_SHRED, thread/queue sizes
+│   ├── transaction.rs             # raw decoded-transaction struct
+│   ├── shred.rs                   # shredding, coding-shred generation, CRC32 validation
+│   ├── thread_pool.rs             # fixed-size thread pool for parallel validation
+│   └── main.rs                    # orchestrates the full pipeline
+└── wrapper/
+    └── rs_wrapper.rs              # Rust interface to the Reed-Solomon library
+```
 
 ## Key constants
 
