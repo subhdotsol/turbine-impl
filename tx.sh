@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RPC="https://mainnet.helius-rpc.com/?api-key=REDACTED"
+source "$(dirname "$0")/.env"
 OUTPUT="data/transactions.json"
 TARGET=10000
 
