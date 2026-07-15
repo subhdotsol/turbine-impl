@@ -15,7 +15,7 @@ remaining shreds — proving the erasure-coding math actually works.
 
 ## How it works
 
-<img width="1098" height="498" alt="Screenshot 2026-07-14 at 9 13 18 PM" src="https://github.com/user-attachments/assets/fc5ac33e-37f5-4fc5-af73-800788f8df8a" />
+<img width="1172" height="570" alt="Screenshot 2026-07-14 at 11 16 50 PM" src="https://github.com/user-attachments/assets/4aaa5f2e-d75f-443f-b7e9-0f7e8e723782" />
 
 
 At the end, the program prints:
