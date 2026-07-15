@@ -59,22 +59,7 @@ failed:    0
 
 ## File structure
 
-```
-turbine/
-├── Cargo.toml
-├── Cargo.lock
-├── tx.sh                          # fetches real Solana tx data from an RPC (optional)
-├── data/
-│   └── transactions.json          # input: JSON array of base64-encoded transactions
-├── src/
-│   ├── constants.rs               # SHRED_SIZE, DATA_SHRED, CODE_SHRED, thread/queue sizes
-│   ├── transaction.rs             # raw decoded-transaction struct
-│   ├── shred.rs                   # shredding, coding-shred generation, CRC32 validation
-│   ├── thread_pool.rs             # fixed-size thread pool for parallel validation
-│   └── main.rs                    # orchestrates the full pipeline
-└── wrapper/
-    └── rs_wrapper.rs              # Rust interface to the Reed-Solomon library
-```
+
 
 ## Key constants
 
